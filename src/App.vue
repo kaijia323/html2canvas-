@@ -27,30 +27,18 @@ export default {
     }
   },
   mounted () {
-    // console.log(this.$html2canvas)
-    console.log(this.$refs.area)
   },
   methods: {
     generateImage () {
-      console.log('123')
-      const rect = this.$refs.area.getBoundingClientRect()
+      const rect = this.$refs.area.getBoundingClientRect() // 关键代码
       this.$html2canvas(this.$refs.area, {
-        // x: rect.left,
-        // y: -rect.top,
-        scrollY: rect.top
+        scrollY: rect.top // 关键代码
       }).then(canvas => {
-        console.log(this.$refs.area.getBoundingClientRect())
-        // const rect = this.$refs.area.getBoundingClientRect()
-        // const content = canvas.getContext('2d')
-        // content.translate(-rect.left, -rect.top)
         canvas.toBlob(blob => {
-          console.log(blob)
           this.imgUrl = URL.createObjectURL(blob)
-          console.log(this.imgUrl)
           const aImg = document.createElement('a')
           aImg.href = this.imgUrl
-          // aImg.download = this.imgUrl
-          aImg.download = '222222222'
+          aImg.download = this.imgUrl
           document.body.appendChild(aImg)
           aImg.click()
           document.body.removeChild(aImg)
