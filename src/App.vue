@@ -1,32 +1,72 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div ref="area" id="aaa">
+      <van-area title="标题" :area-list="areaList" />
+      <van-area title="标题" :area-list="areaList" />
+      <van-area title="标题" :area-list="areaList" />
+      <van-area title="标题" :area-list="areaList" />
+      <van-area title="标题" :area-list="areaList" />
+      <van-area title="标题" :area-list="areaList" />
+      <van-area title="标题" :area-list="areaList" />
+      <van-area title="标题" :area-list="areaList" />
+      <van-area title="标题" :area-list="areaList" />
+      <van-area title="标题" :area-list="areaList" />
     </div>
-    <router-view/>
+    <van-button type="primary" @click="generateImage">生成图片</van-button>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import area from './js/area'
+export default {
+  name: 'app',
+  data () {
+    return {
+      areaList: area,
+      imgUrl: ''
+    }
+  },
+  mounted () {
+    // console.log(this.$html2canvas)
+    console.log(this.$refs.area)
+  },
+  methods: {
+    generateImage () {
+      console.log('123')
+      const rect = this.$refs.area.getBoundingClientRect()
+      this.$html2canvas(this.$refs.area, {
+        // x: rect.left,
+        // y: -rect.top,
+        scrollY: rect.top
+      }).then(canvas => {
+        console.log(this.$refs.area.getBoundingClientRect())
+        // const rect = this.$refs.area.getBoundingClientRect()
+        // const content = canvas.getContext('2d')
+        // content.translate(-rect.left, -rect.top)
+        canvas.toBlob(blob => {
+          console.log(blob)
+          this.imgUrl = URL.createObjectURL(blob)
+          console.log(this.imgUrl)
+          const aImg = document.createElement('a')
+          aImg.href = this.imgUrl
+          // aImg.download = this.imgUrl
+          aImg.download = '222222222'
+          document.body.appendChild(aImg)
+          aImg.click()
+          document.body.removeChild(aImg)
+        }, 'image/png')
+      })
     }
   }
+}
+</script>
+
+<style lang="scss">
+#app {
+  padding: 30px;
+}
+img {
+  width: 100%;
+  height: 100%;
 }
 </style>
