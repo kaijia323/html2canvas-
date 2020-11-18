@@ -1,3 +1,4 @@
+// 中国行政区域数据：https://github.com/web-wgf/china-area-data
 export default {
   86: {
     110000: '北京市',
