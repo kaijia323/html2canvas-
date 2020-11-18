@@ -5,6 +5,15 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    redirect: '/home'
+  },
+  {
+    name: 'Home',
+    path: '/home',
+    component: () => import('@/views/home')
+  },
+  {
     name: 'areaSelect',
     path: '/areaSelect',
     component: () => import('@/views/areaSelect')
@@ -13,6 +22,11 @@ const routes = [
     name: 'html2canvas',
     path: '/html2canvas',
     component: () => import('@/views/html2canvas')
+  },
+  {
+    name: 'testDemo',
+    path: '/testDemo',
+    component: () => import('@/views/testDemo')
   }
 ]
 

@@ -1,29 +1,31 @@
 <template>
   <div class="areaSelect-wrap">
-    <el-select v-model="value1" placeholder="请选择" @change="provinceChange">
+    <el-select v-model="provinceValue" placeholder="请选择省份" @change="provinceChange">
       <el-option
-        v-for="item in options1"
+        v-for="item in provinceOptions"
         :key="item.value"
         :label="item.label"
         :value="item.value">
       </el-option>
     </el-select>
-    <el-select v-model="value2" placeholder="请选择" @change="cityChange">
+    <el-select v-model="cityValue" placeholder="请选择市" @change="cityChange">
       <el-option
-        v-for="item in options2"
+        v-for="item in cityOptions"
         :key="item.value"
         :label="item.label"
         :value="item.value">
       </el-option>
     </el-select>
-    <el-select v-model="value3" placeholder="请选择">
+    <el-select v-model="countryValue" placeholder="请选择区" @change="countryChange">
       <el-option
-        v-for="item in options3"
+        v-for="item in countryOptions"
         :key="item.value"
         :label="item.label"
         :value="item.value">
       </el-option>
     </el-select>
+    <p></p>
+<!--    <el-button @click="btnClick">提交</el-button>-->
   </div>
 
 </template>
@@ -39,59 +41,140 @@ export default {
   components: {},
   filters: {},
   mixins: [],
-  props: {},
+  props: {
+    provinceProp: {
+      type: String,
+      default: ''
+    },
+    cityProp: {
+      type: String,
+      default: ''
+    },
+    countryProp: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
-      value1: '',
-      value2: '',
-      value3: '',
-      options1: [],
-      options2: [],
-      options3: []
+      provinceValue: '',
+      cityValue: '',
+      countryValue: '',
+      provinceOptions: [],
+      cityOptions: [],
+      countryOptions: [],
+      areaData: null
     }
   },
   computed: {},
-  watch: {},
+  watch: {
+  },
   created () {
   },
   mounted () {
-    // console.log(area)
     this.handleArea()
+    this.init()
   },
   methods: {
+    init () {
+      if (this.provinceProp) {
+        this.provinceValue = this.provinceProp
+        this.provinceChange()
+      }
+      if (this.cityProp) {
+        this.cityValue = this.cityProp
+        this.cityChange()
+      }
+      if (this.countryProp) {
+        this.countryValue = this.countryProp
+        this.countryChange()
+      }
+    },
     handleArea () {
-      console.log(area['86'])
-      this.options1 = []
-      this.value1 = ''
+      this.provinceOptions = []
+      this.provinceValue = ''
       for (const key in area['86']) {
-        this.options1.push({
+        this.provinceOptions.push({
           value: key,
           label: area['86'][key]
         })
       }
-      console.log(this.options1)
+    },
+    resetCityAndCountryData () {
+      this.cityValue = ''
+      this.countryValue = ''
+      this.cityOptions = []
+      this.countryOptions = []
+    },
+    resetCountryData () {
+      this.countryValue = ''
+      this.countryOptions = []
     },
     provinceChange () {
-      console.log(this.value1)
-      console.log(area[this.value1])
-      this.options2 = []
-      this.value2 = ''
-      for (const key in area[this.value1]) {
-        this.options2.push({
+      this.resetCityAndCountryData()
+      for (const key in area[this.provinceValue]) {
+        this.cityOptions.push({
           value: key,
-          label: area[this.value1][key]
+          label: area[this.provinceValue][key]
         })
       }
+      this.chooseData()
     },
     cityChange () {
-      this.options3 = []
-      this.value3 = ''
-      for (const key in area[this.value2]) {
-        this.options3.push({
+      this.resetCountryData()
+      for (const key in area[this.cityValue]) {
+        this.countryOptions.push({
           value: key,
-          label: area[this.value2][key]
+          label: area[this.cityValue][key]
         })
       }
+      this.chooseData()
+    },
+    countryChange () {
+      this.chooseData()
+    },
+    chooseData () {
+      // console.log(this.provinceValue, this.cityValue, this.countryValue)
+      // console.log(area['86'][this.provinceValue], area[this.provinceValue][this.cityValue], area[this.cityValue][this.countryValue])
+      let data = null
+      if (this.countryValue) {
+        data = {
+          province: {
+            code: this.provinceValue,
+            name: area['86'][this.provinceValue]
+          },
+          city: {
+            code: this.cityValue,
+            name: area[this.provinceValue][this.cityValue]
+          },
+          country: {
+            code: this.countryValue,
+            name: area[this.cityValue][this.countryValue]
+          }
+        }
+      } else if (this.cityValue) {
+        data = {
+          province: {
+            code: this.provinceValue,
+            name: area['86'][this.provinceValue]
+          },
+          city: {
+            code: this.cityValue,
+            name: area[this.provinceValue][this.cityValue]
+          }
+        }
+      } else if (this.provinceValue) {
+        data = {
+          province: {
+            code: this.provinceValue,
+            name: area['86'][this.provinceValue]
+          }
+        }
+      } else {
+        data = null
+      }
+      // console.log(data)
+      this.areaData = data
     }
   }
 }
