@@ -11,8 +11,10 @@
     "core-js": "^3.6.5",
     "element-ui": "^2.14.1",
     "html2canvas": "^1.0.0-rc.7",
+    "qrcodejs2": "0.0.2",
     "vant": "^2.10.14",
     "vue": "^2.6.11",
+    "vue-qr": "^2.3.0",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
   },
