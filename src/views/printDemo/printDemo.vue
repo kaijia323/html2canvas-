@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import printCSS from './qrcode-print-css'
+import printjs from './printjs'
 export default {
   name: 'printDemo',
   data () {
@@ -43,36 +43,17 @@ export default {
       }
     },
     printQRCode () {
-      const printWindow = window.open('', '', `location=no,width=${window.innerWidth / 2}`)
-      // 打开文档流，准备写入内容
-      printWindow.document.open()
-      // const qrcodeVal = document.querySelector('body').outerHTML
-      const qrcodeVal = this.$refs.aaa.outerHTML
-      // 写入样式
-      const newHtml = `
-      <html>
-        <head>
-          <style type="text/css">
-          ${printCSS.printCSS}
-          </style>
-        </head>
-        <body>
-            ${qrcodeVal}
-        </body>
-      </html>
-      `
-      printWindow.document.write(newHtml)
-      // 关闭文档流，将内容显示
-      printWindow.document.close()
-      // printWindow.print()
-      // printWindow.close()
+      printjs({
+        el: this.$refs.aaa,
+        printCSS: '',
+        head: document.head
+      })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
 .qrcode {
   display: flex;
   flex-wrap: wrap;
@@ -87,6 +68,26 @@ export default {
     img {
       width: 100%;
       height: 100%;
+    }
+  }
+}
+// 建议打印样式写在最后，这样正则匹配的时候，不会匹配到多余的样式
+@media print {
+  @page {
+    size: A4 portrait;
+  }
+  .qrcode {
+    display: flex;
+    flex-wrap: wrap;
+    .qrcode-item {
+      margin-right: 30px;
+      margin-bottom: 30px;
+      width: 120px;
+      height: 120px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 }

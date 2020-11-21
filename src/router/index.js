@@ -16,22 +16,22 @@ const routes = [
   {
     name: 'areaSelect',
     path: '/areaSelect',
-    component: () => import('@/views/areaSelect')
+    component: () => import('@/views/areaSelect/areaSelect')
   },
   {
     name: 'html2canvas',
     path: '/html2canvas',
-    component: () => import('@/views/html2canvas')
+    component: () => import('@/views/html2canvas/html2canvas')
   },
   {
     name: 'testDemo',
     path: '/testDemo',
-    component: () => import('@/views/testDemo')
+    component: () => import('@/views/testDemo/testDemo')
   },
   {
     name: 'printDemo',
     path: '/printDemo',
-    component: () => import('@/views/printDemo')
+    component: () => import('@/views/printDemo/printDemo')
   }
 ]
 

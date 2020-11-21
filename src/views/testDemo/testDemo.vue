@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import areaSelect from './areaSelect'
+import areaSelect from '../areaSelect/areaSelect'
 export default {
   name: 'testDemo',
   components: {
