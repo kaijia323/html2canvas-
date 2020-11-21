@@ -5,6 +5,7 @@
  * @param head (根据document.head通过正则匹配样式，只匹配@media print {}开头，</style>结尾的样式)
  * @returns {string}
  */
+import elementUI from './elementUI'
 export default function printjs ({ el = '', printCSS = '', head = '' }) {
   if (!el || !el.outerHTML) {
     console.warn('没有传入DOM对象')
@@ -36,6 +37,7 @@ export default function printjs ({ el = '', printCSS = '', head = '' }) {
             body {
             visibility: visible;
             }
+            ${elementUI.cssStyle}
           }
           ${css}
         </style>

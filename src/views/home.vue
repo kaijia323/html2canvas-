@@ -7,6 +7,8 @@
     <router-link to="/testDemo">省市区选择模板</router-link>
     <p></p>
     <router-link to="/printDemo">打印测试</router-link>
+    <p></p>
+    <router-link to="/printTable">打印表格测试</router-link>
   </div>
 </template>
 

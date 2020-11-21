@@ -32,6 +32,11 @@ const routes = [
     name: 'printDemo',
     path: '/printDemo',
     component: () => import('@/views/printDemo/printDemo')
+  },
+  {
+    name: 'printTable',
+    path: '/printTable',
+    component: () => import('@/views/testDemo/printTable')
   }
 ]
 
