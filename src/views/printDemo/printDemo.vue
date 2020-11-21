@@ -24,11 +24,9 @@ export default {
     }
   },
   mounted () {
-    console.log(document.head)
   },
   methods: {
     generateQRCode () {
-      console.log(this.$refs.qrcode)
       const qrcode = new this.$QRCode(this.$refs.qrcode)
       for (const i in [1, 2, 3, 4, 5]) {
         qrcode.makeCode(i + '油麦菜')
