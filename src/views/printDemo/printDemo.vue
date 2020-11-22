@@ -4,7 +4,7 @@
       <template v-if="imgList.length !== 0">
         <div v-for="(item, index) in imgList" :key="index" class="qrcode-item">
           <img :src="item.imgSrc" alt="">
-          <span>1234文档</span>
+          <span>{{ '文档' + index }}</span>
         </div>
       </template>
     </div>
@@ -28,7 +28,7 @@ export default {
   methods: {
     generateQRCode () {
       const qrcode = new this.$QRCode(this.$refs.qrcode)
-      for (const i in [1, 2, 3, 4, 5]) {
+      for (const i in [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3]) {
         qrcode.makeCode(i + '油麦菜')
         const canvas = this.$refs.qrcode.querySelector('canvas')
         canvas.toBlob(blob => {
@@ -52,6 +52,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .qrcode {
   display: flex;
   flex-wrap: wrap;
@@ -60,7 +61,7 @@ export default {
   background: #555;
   .qrcode-item {
     margin-right: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
     width: 120px;
     height: 120px;
     img {
@@ -75,17 +76,25 @@ export default {
     size: A4 portrait;
   }
   .qrcode {
-    display: flex;
-    flex-wrap: wrap;
+    /*只能是position: relative 或 static才能使用分页*/
+    /*display: flex;*/
+    /*flex-wrap: wrap;*/
+
     .qrcode-item {
-      margin-right: 30px;
-      margin-bottom: 30px;
-      width: 120px;
-      height: 120px;
+      /*chrome行内块不能分页，火狐行内块可以分页*/
+      /*page-break-after: always;*/
+      display: inline-block; // 设置行内块让其自动分页，不至于分割图片
+      margin-right: 60px;
+      margin-bottom: 60px;
+      width: 125px;
+      height: 125px;
       img {
         width: 100%;
         height: 100%;
       }
+    }
+    .qrcode-item:nth-child(4n) {
+      margin-right: 0;
     }
   }
 }
